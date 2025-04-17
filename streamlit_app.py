@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-pip install xgboost
 from xgboost import XGBClassifier
 
 # Set page config
