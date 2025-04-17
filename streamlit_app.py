@@ -7,7 +7,7 @@ class HotelBookingApp:
     def __init__(self):
         self.model = self.load_model('xgboost_model.pkl')
         self.encoders = self.load_model('label_encoders.pkl')
-        self.data = self.load_csv('hotel_booking.csv')  # Update this with your actual CSV filename
+        self.data = self.load_csv('Dataset_B_hotel.csv')  # Update this with your actual CSV filename
 
     def load_model(self, path):
         with open(path, 'rb') as f:
