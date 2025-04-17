@@ -7,7 +7,7 @@ class HotelBookingApp:
     def __init__(self):
         self.model = self.load_model('xgboost_model.pkl')
         self.encoders = self.load_model('label_encoders.pkl')
-        self.data = self.load_csv('Dataset_B_hotel.csv')  # Update this with your actual CSV filename
+        self.data = self.load_csv('Dataset_B_hotel.csv')  # Replace with actual filename if needed
 
     def load_model(self, path):
         with open(path, 'rb') as f:
@@ -17,7 +17,7 @@ class HotelBookingApp:
         try:
             return pd.read_csv(path)
         except Exception as e:
-            st.warning(f"Failed to load CSV data: {e}")
+            st.warning(f"⚠️ Failed to load CSV file: {e}")
             return None
 
     def encode_input(self, input_df):
@@ -37,22 +37,19 @@ class HotelBookingApp:
         return prediction, probability
 
     def run(self):
-        # Title and description
-        st.markdown("# 🏨 Hotel Booking Cancellation Prediction")
-        st.markdown("Predict whether a hotel booking will be **cancelled** or **not cancelled** based on input data.")
+        st.title("🏨 Hotel Booking Cancellation Prediction")
+        st.write("Predict whether a hotel booking will be **cancelled** or **not cancelled** based on the input data below.")
         st.markdown("---")
 
-        # Sidebar
-        show_data = st.sidebar.checkbox("📊 Show Dataset")
-        st.sidebar.write("Use the sidebar to explore the app 👈")
-
-        if show_data and self.data is not None:
-            st.subheader("📂 Hotel Booking Dataset")
+        # Show the dataset
+        if self.data is not None:
+            st.subheader("📂 Dataset Preview")
             st.dataframe(self.data.head(50))
             st.markdown("---")
 
-        st.subheader("📝 Booking Data Input")
+        st.subheader("✏️ Input Booking Information")
 
+        # Test cases
         test_cases = {
             "Test Case 1": {
                 'no_of_adults': 2,
@@ -94,7 +91,7 @@ class HotelBookingApp:
             }
         }
 
-        selected_case = st.selectbox("📁 Select Test Case", ["Manual Input"] + list(test_cases.keys()))
+        selected_case = st.selectbox("📁 Choose a Test Case", ["Manual Input"] + list(test_cases.keys()))
 
         if selected_case != "Manual Input":
             user_input = pd.DataFrame([test_cases[selected_case]])
@@ -105,7 +102,7 @@ class HotelBookingApp:
                 'no_of_weekend_nights': st.number_input('Weekend Nights', min_value=0, max_value=10, value=1),
                 'no_of_week_nights': st.number_input('Week Nights', min_value=0, max_value=10, value=2),
                 'type_of_meal_plan': st.selectbox('Meal Plan Type', ['Meal Plan 1', 'Meal Plan 2', 'Meal Plan 3', 'Not Selected']),
-                'required_car_parking_space': float(st.selectbox('Need Parking?', [0, 1])),
+                'required_car_parking_space': float(st.selectbox('Car Parking Required?', [0, 1])),
                 'room_type_reserved': st.selectbox('Room Type Reserved', ['Room_Type 1', 'Room_Type 2', 'Room_Type 3', 'Room_Type 4', 'Room_Type 5', 'Room_Type 6', 'Room_Type 7']),
                 'lead_time': st.slider('Lead Time (days)', 0, 500, 45),
                 'arrival_year': st.selectbox('Arrival Year', [2017, 2018]),
@@ -122,9 +119,9 @@ class HotelBookingApp:
         if st.button("🔮 Predict Booking Status"):
             pred, prob = self.predict(user_input)
             status = "✅ Not Cancelled" if pred == 0 else "❌ Cancelled"
-            st.success(f"### Prediction Result: {status}")
-            st.info(f"### Probability of Cancellation: {prob:.2%}")
-            st.markdown("#### 📌 Input Data Used for Prediction:")
+            st.success(f"### Prediction: {status}")
+            st.info(f"### Cancellation Probability: {prob:.2%}")
+            st.markdown("#### 🔎 Data Used for Prediction")
             st.dataframe(user_input)
 
 if __name__ == "__main__":
