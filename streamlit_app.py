@@ -87,7 +87,7 @@ class HotelBookingApp:
                 'required_car_parking_space': float(st.selectbox('Butuh Parkir?', [0, 1])),
                 'room_type_reserved': st.selectbox('Tipe Kamar', ['Room_Type 1', 'Room_Type 2', 'Room_Type 3', 'Room_Type 4', 'Room_Type 5', 'Room_Type 6', 'Room_Type 7']),
                 'lead_time': st.slider('Lead Time', 0, 500, 45),
-                'arrival_year': st.selectbox('Tahun Kedatangan', [2017]),
+                'arrival_year': st.selectbox('Tahun Kedatangan', [2017,2018]),
                 'arrival_month': st.slider('Bulan Kedatangan', 1, 12, 7),
                 'arrival_date': st.slider('Tanggal Kedatangan', 1, 31, 15),
                 'market_segment_type': st.selectbox('Segment Pasar', ['Online', 'Offline', 'Corporate', 'Aviation', 'Complementary']),
