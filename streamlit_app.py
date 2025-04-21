@@ -38,7 +38,7 @@ class HotelBookingApp:
 
     def run(self):
         st.title("🏨 Hotel Booking Cancellation Prediction")
-        st.write("Predict whether a hotel booking will be **cancelled** or **not cancelled** based on the input data below.")
+        st.write("Predict whether a hotel booking will be **cancelled** or **not cancelled** based on the input data below")
         st.markdown("---")
 
         # Show the dataset
